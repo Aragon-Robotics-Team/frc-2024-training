@@ -6,4 +6,6 @@ Trainees: Make your own branch, make a folder in your own branch to store all yo
 
 Names:
 - Alex
+-Avi
 - Claire
+
