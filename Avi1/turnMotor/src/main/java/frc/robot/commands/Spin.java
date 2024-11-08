@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Motor;
@@ -14,11 +15,12 @@ public class Spin extends Command {
         private Joystick m_joystick;
         private double speed;
         private final double kSpeedMultiplier = 0.05;
+        private DigitalInput m_beamBreak;
   /** Creates a new Spin. */
-  public Spin(Joystick joystick, Motor motor) {
+  public Spin(Joystick joystick, Motor motor, DigitalInput beamBreak) {
 m_motor = motor;
 m_joystick = joystick;
-      
+m_beamBreak = beamBreak;  
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -30,9 +32,12 @@ m_joystick = joystick;
   @Override
   public void execute() {
     speed = m_joystick.getRawAxis(1)*kSpeedMultiplier;
-    m_motor.setMotorSpeed(speed);
-    
-  }
+    if (m_beamBreak.get()) {
+      m_motor.setMotorSpeed(0);
+    } else{
+      m_motor.setMotorSpeed(speed);
+    }
+    }
 
   // Called once the command ends or is interrupted.
   @Override

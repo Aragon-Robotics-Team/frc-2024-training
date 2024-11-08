@@ -4,10 +4,12 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.Spin;
 import frc.robot.subsystems.Motor;
 
 /**
@@ -19,12 +21,14 @@ import frc.robot.subsystems.Motor;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 public Motor m_motor = new Motor();
-private final Joystick m_Joystick = new Joystick(0);
-
+private DigitalInput m_beamBreak = new DigitalInput(9);
+private final Joystick m_joystick = new Joystick(0);
+private final Spin m_spin=new Spin(m_joystick,m_motor,m_beamBreak);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+
   }
 
   /**
@@ -48,6 +52,11 @@ private final Joystick m_Joystick = new Joystick(0);
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
+    
+    return null;
+  }
+  public Command getTeleopCommand(){
+    m_motor.setDefaultCommand(m_spin);
     return null;
   }
 }
