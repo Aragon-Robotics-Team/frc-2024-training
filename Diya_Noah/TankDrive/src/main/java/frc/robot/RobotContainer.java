@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.MoveForTime;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -23,12 +24,14 @@ public class RobotContainer {
   private Drivetrain m_drivetrain = new Drivetrain();
   private Joystick m_joystick = new Joystick(0);
   private ArcadeDrive m_arcadeDrive = new ArcadeDrive(m_drivetrain, m_joystick);
+  private MoveForTime moveForTime = new MoveForTime (m_drivetrain, 0.1, 4);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
   }
+  
 
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
@@ -49,6 +52,10 @@ public class RobotContainer {
     m_drivetrain.setDefaultCommand(m_arcadeDrive);
     return null;
 }
+public Command getAutonomousCommand(){
+    return moveForTime;
+}
+  
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
